@@ -1,0 +1,68 @@
+
+
+<footer class="footer py-5" style="background-repeat: no-repeat; background-position: bottom center;">
+  <div class="container">
+    <div class="row d-flex align-items-center">
+      <div class="col-md-3 text-center text-md-start mb-4 mb-md-0 f-logo">
+        <a href="#">
+          <img src="/images/sproutly-logo.png" alt="Sproutly Logo" class="img-fluid mb-3">
+        </a>
+        <p>Sproutly helps you grow fresh, delicious produce at home with our wide variety of high-quality seeds.</p>
+      </div>
+      <div class="col-md-6 f-info-links mb-4 mb-md-0">
+        <ul class="list-unstyled d-flex flex-wrap justify-content-center justify-content-md-start gap-3 mb-0">
+          <li><a href="#" class="active">Shop Seeds</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/items">Products</a></li>
+          <li><a href="/help">Help Center</a></li>
+          <li><a href="/contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3 text-center text-md-end f-info-socials">
+        <ul class="list-unstyled d-flex justify-content-center justify-content-md-end mb-3">
+          <li class="me-3"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+          <li class="me-3"><a href="#"><i class="fab fa-instagram"></i></a></li>
+          <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+        </ul>
+        <button id="findUsButton" class="btn btn-success btn-lg rounded-pill px-4" data-bs-target="#shopLocationModal"
+          data-bs-toggle="modal">Find Your Local Sproutly</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="shopLocationModal" tabindex="-1" aria-labelledby="shopLocationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="shopLocationModalLabel">Sproutly Seed Shop</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="mapContainer" style="height: 300px;">
+            <div id="map"></div>
+          </div>
+          <p class="mt-3"><b>Address:</b> Kisan Seed Shop, Near Godhra ST Bus Stand, Godhra</p>
+          <p><b>Phone:</b> (+91) 99882-28899</p>
+          <p><b>Hours:</b> Monday-Friday: 10am-6pm, Saturday: 9am-5pm, Sunday: Closed</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Godhra+ST+Bus+Station+,+Godhra" target="_blank"
+            class="btn btn-primary">Get Directions</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center py-1 border-top d-flex flex-wrap justify-content-center">
+    <p class="text-muted me-auto ms-2">&copy; 2024 Sproutly. All Rights Reserved.</p>
+    <ul class="list-unstyled d-flex mb-0 ms-2">
+      <li class="me-2"><i class="fab fa-cc-visa"></i></li>
+      <li class="me-2"><i class="fab fa-cc-mastercard"></i></li>
+      <li class="me-2"><i class="fab fa-paypal"></i></li>
+    </ul>
+  </div>
+</footer>
+
+
+<script src="/js/map.js"></script>

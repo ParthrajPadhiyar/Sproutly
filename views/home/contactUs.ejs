@@ -1,0 +1,92 @@
+<% layout("layouts/boilerplate.ejs") %>
+
+
+<style>
+    body {
+      font-family: sans-serif;
+    }
+
+    header {
+      text-align: center;
+    }
+
+    .list-group-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .list-group-item i {
+      font-size: 1.25rem;
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+
+    @media (max-width: 767.98px) {
+      header h1 {
+        font-size: 1.75rem;
+      }
+    }
+  </style>
+
+<header class="container py-3 border-bottom">
+  <h1>Sproutly - Contact Us</h1>
+  <p>Have questions or need help? We're here for you!</p>
+</header>
+
+<main class="container ">
+  <div class="row">
+    <div class="col-md-6 mb-3 pt-3">
+      <h2>Get in touch</h2>
+      <p>Feel free to send us a message using the form below, or reach out to us through one of the following methods:</p>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <i class="fas fa-envelope me-2"></i> Email: &nbsp;<a href="mailto:sproutly.seed@gmail.com">sproutly.seed@gmail.com</a>
+        </li>
+        <li class="list-group-item">
+          <i class="fas fa-phone me-2"></i> Phone: +91 9510530006 (10:00 AM to 5:00 PM)
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-6 pt-3">
+      <h2>Contact Form</h2>
+      <form id="contactForm" novalidate class="needs-validation" method="post" action="/contact">
+        <div class="mb-3">
+          <label for="name" class="form-label">Your Name</label>
+          <input type="text" class="form-control" id="name" required name="name">
+          <div class="invalid-feedback">
+            Please enter your name.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email Address</label>
+          <input type="email" class="form-control" id="email" required name="email">
+          <div class="invalid-feedback">
+            Please enter a valid email address.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="subject" class="form-label">Subject</label>
+          <input type="text" class="form-control" id="subject" required name="subject">
+          <div class="invalid-feedback">
+            Please enter a subject.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">Message</label>
+          <textarea class="form-control" id="message" rows="5" required name="message"></textarea>
+          <div class="invalid-feedback">
+            Please enter a message.
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success">Send Message</button>
+      </form>
+      
+    </div>
+  </div>
+</main>
+
+
+
+

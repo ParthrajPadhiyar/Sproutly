@@ -1,0 +1,135 @@
+ <% layout("/layouts/boilerplate.ejs") %> 
+
+<style>
+    #togglePassword{
+        
+        top: 0.65rem;
+    right: 2.2rem;
+    
+    }
+
+    
+    .invalid-feedback, .valid-feedback {
+    display: none;
+}
+
+input:invalid + .invalid-feedback {
+    display: block;
+}
+
+input.is-valid + .valid-feedback {
+    display: block;
+}
+
+input.is-invalid + .invalid-feedback {
+    display: block;
+}
+
+</style>
+
+
+<div class="row mt-3">
+    <h1 class="col-6 offset-3">Signup on Sproutly</h1>
+    <div class="col-6 offset-3">
+        <form action="/signup" method="post" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" name="username" placeholder="Enter username"
+                    class="form-control " required id="username">
+                    <div class="valid-feedback">username looks good!</div>
+                    <div class="invalid-feedback">Please Enter a Username</div>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" placeholder="Enter email"
+                    class="form-control " required id="email">
+                    <div class="valid-feedback">Email looks good!</div>
+                    <div class="invalid-feedback">Please Enter a Email</div>
+            </div>
+            <div class="mb-3">
+                <label for="mobile" class="form-label">Mobile No.</label>
+                <input type="text" name="mobile" placeholder="Enter Mobile Number"
+                    class="form-control " required id="mobile" minlength="10">
+                    <div class="valid-feedback">Mobile Number looks good!</div>
+                    <div class="invalid-feedback">Please Enter a Valid Mobile Number</div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                    <div class="password position-relative">
+                        <input type="password" name="password" placeholder="Enter Password"
+                        class="form-control" required id="password">
+                        <div class="">
+                            <i id="togglePassword" class="fas fa-eye-slash position-absolute"></i>
+                        </div>
+                    </div> 
+                
+                <div class="invalid-feedback">Please Enter a Password</div>
+            </div>
+            
+            <button class="btn btn-success">SignUp</button>
+        </form>
+    </div>
+</div>
+
+<script>
+   
+// script.js
+
+document.getElementById('togglePassword').addEventListener('click', function () {
+    const passwordField = document.getElementById('password');
+    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+    passwordField.setAttribute('type', type);
+    this.classList.toggle('fa-eye');
+    this.classList.toggle('fa-eye-slash');
+});
+
+
+document.getElementById('password').addEventListener('input', validatePassword);
+document.querySelector('form').addEventListener('submit', function(event) {
+    if (!validatePassword()) {
+        event.preventDefault(); // Prevent form submission if password is invalid
+    }
+});
+
+function validatePassword() {
+    const passwordField = document.getElementById('password');
+    const feedback = document.getElementById('passwordFeedback');
+    
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(passwordField.value);
+    const hasLowerCase = /[a-z]/.test(passwordField.value);
+    const hasNumber = /[0-9]/.test(passwordField.value);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(passwordField.value);
+
+    let message = '';
+    if (passwordField.value.length < minLength) {
+        message = 'Password must be at least 8 characters long.';
+    } else if (!hasUpperCase) {
+        message = 'Password must contain at least one uppercase letter.';
+    } else if (!hasLowerCase) {
+        message = 'Password must contain at least one lowercase letter.';
+    } else if (!hasNumber) {
+        message = 'Password must contain at least one number.';
+    } else if (!hasSpecialChar) {
+        message = 'Password must contain at least one special character.';
+    }
+
+    if (message === '') {
+        feedback.textContent = 'Password looks good!';
+        feedback.classList.remove('invalid-feedback');
+        feedback.classList.add('valid-feedback');
+        passwordField.classList.remove('is-invalid');
+        passwordField.classList.add('is-valid');
+        return true;
+    } else {
+        feedback.textContent = message;
+        feedback.classList.remove('valid-feedback');
+        feedback.classList.add('invalid-feedback');
+        passwordField.classList.remove('is-valid');
+        passwordField.classList.add('is-invalid');
+        return false;
+    }
+}
+
+
+</script>

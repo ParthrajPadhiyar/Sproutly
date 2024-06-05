@@ -1,0 +1,199 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+<style>
+  @media (max-width: 768px) {
+    .cart-card {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+    .cart-card-img-top {
+      height: auto !important;
+    }
+  }
+  </style>
+
+<div>
+  <h2 class="my-3 text-center">Your Cart</h2>
+  <% if(cart.length === 0) { %>
+    <h3 class="text-center">Your cart is empty.</h3>
+    <div class="text-center">
+      <a href="/items" class="btn btn-success">Start Shopping</a>
+    </div>
+  <% } else { %>
+    <% cart.forEach(cartItem => { %>
+      <div class="card cart-card mb-3 mx-auto" style="max-width: 540px;">
+        <div class="row g-0">
+          <a href="/items/<%= cartItem.item._id %>" class="cart-img-link">
+            <div class="col-4 col-md-4 d-flex align-items-center">
+              <img src="<%= cartItem.item.image.url %>" class="img-fluid cart-card-img-top rounded-start h-100" alt="<%= cartItem.item.title %>" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Know more">
+            </div>
+          </a>
+          <div class="col-8 col-md-8">
+            <div class="card-body cart-card-body">
+              <a href="/items/<%= cartItem.item._id %>" class="cart-link">
+                <h5 class="card-title" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Know more"><%= cartItem.item.title %></h5>
+                <p class="card-text text-wrap" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="<%= cartItem.item.description %>"><%= cartItem.item.description.substring(0,50) + '...' %></p>
+              </a>
+              <div class="d-flex align-items-center justify-content-center mt-1 flex-wrap">  
+                <label for="quantity-<%= cartItem.item._id %>" class="col-form-label me-2">Qty</label>  
+                <button class="btn btn-sm btn-outline-primary" id="decrease-<%= cartItem.item._id %>">-</button>
+                <input type="number" class="form-control text-center w-25 item-quantity" id="quantity-<%= cartItem.item._id %>" value="<%= cartItem.quantity %>" min="1">
+                <button class="btn btn-sm btn-outline-primary" id="increase-<%= cartItem.item._id %>">+</button>
+              </div>
+              <p class="card-text mt-1 mb-1"><small class="text-body-secondary"><i class="fa fa-inr item-price" id="price-<%= cartItem.item._id %>"><%=  cartItem.quantity * cartItem.item.price.toLocaleString("en-IN") %></i></small></p>
+              <div class="row d-flex align-items-center justify-content-center ms-4 mb-2">
+                <div class="col-6 col-md-4">
+                  <form action="/cart/<%= cartItem.item._id %>?_method=DELETE" method="post">
+                    <button class="btn btn-dark">Remove</button>
+                  </form>
+                </div>
+                <div class="col-6 col-md-5">
+                  <form action="/cart/<%= cartItem.item._id %>?_method=PUT" method="post">
+                    <input type="number" hidden name="quantity" value="<%= cartItem.quantity %>" id="updateQty-<%= cartItem.item._id %>">
+                    <button class="btn btn-secondary" id="update-<%= cartItem.item._id %>" disabled>Update Qty</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+    <p class="text-center fw-bold">Total Amount: <i class="fa fa-inr" id="total-price"><%= totalPrice.toLocaleString("en-IN") %></i></p>
+    <div class="text-center">
+      <form action="/cart?_method=DELETE" method="post" id="removeAllForm">
+        <button class="btn btn-outline-danger mb-3">Remove All</button>
+      </form>
+      <a href="/cart/checkout" class="btn btn-success mb-3">Proceed to Checkout</a>
+    </div>
+  <% } %>
+</div>
+
+
+
+
+
+
+<script>
+  const removeAllForm = document.getElementById('removeAllForm');
+  removeAllForm.addEventListener('submit', (event) => {
+    const confirmed = confirm('Are you sure you want to remove all items from your cart?');
+    if (!confirmed) {
+      event.preventDefault(); // Prevent form submission if not confirmed
+    }
+  });
+
+  const decreaseButtons = document.querySelectorAll('button[id^="decrease-"]');
+  const increaseButtons = document.querySelectorAll('button[id^="increase-"]');
+  const quantityInputs = document.querySelectorAll('input[type="number"]');
+  const updateButtons = document.querySelectorAll('button[id^="update"]');
+
+  const updateQtyInputs = document.querySelectorAll('input[id^="updateQty-"]');
+
+  const totalPrice = document.getElementById('total-price');
+  const initialTotalPrice = parseInt(totalPrice.textContent.replace(/,/g, ''));
+  console.log(totalPrice.textContent);
+
+  const initialQuantities = {};
+  const itemQuantityInputs = document.querySelectorAll('.item-quantity');
+  itemQuantityInputs.forEach(input => {
+    const itemId = input.id.split('-')[1];
+    initialQuantities[itemId] = parseInt(input.value);
+    //console.log(initialQuantities[itemId]);
+  });
+
+  const initialItemsPrices = {};
+  const itemsPrices = document.querySelectorAll('.item-price');
+  itemsPrices.forEach(para => {
+    const itemId = para.id.split('-')[1];
+    //console.log("para"+para.textContent);
+    initialItemsPrices[itemId] = parseInt(para.textContent.replace(/,/g, '')) / initialQuantities[itemId];
+    //console.log("price"+initialItemsPrices[itemId]);
+  });
+
+  decreaseButtons.forEach(button => {
+    button.addEventListener('click', (event) => {
+      const itemId = event.target.id.split('-')[1];
+      const quantityInput = document.getElementById(`quantity-${itemId}`);
+      const updateButton = document.getElementById(`update-${itemId}`);
+      const itemPrice = document.getElementById(`price-${itemId}`);
+      const currentQuantity = parseInt(quantityInput.value);
+
+      const updateQtyInput = document.getElementById(`updateQty-${itemId}`);
+      //console.log(initialQuantities[itemId]);
+      //console.log(quantityInput.value);
+
+      if (currentQuantity > 1) {
+        quantityInput.value = currentQuantity - 1;
+        if (initialQuantities[itemId] != quantityInput.value) {
+          updateButton.disabled = false;
+        } else {
+          updateButton.disabled = true;
+        }
+
+        itemPrice.textContent = initialItemsPrices[itemId] * quantityInput.value;
+        totalPrice.textContent = (parseInt(totalPrice.textContent.replace(/,/g, '')) - initialItemsPrices[itemId]).toLocaleString("en-IN");
+
+        updateQtyInput.value = quantityInput.value;
+        console.log(updateQtyInput.value);
+      }
+    });
+  });
+
+  increaseButtons.forEach(button => {
+    button.addEventListener('click', (event) => {
+      //console.log(event.target.id);
+      const itemId = event.target.id.split('-')[1];
+      //console.log(itemId);
+      const quantityInput = document.getElementById(`quantity-${itemId}`);
+      const currentQuantity = parseInt(quantityInput.value);
+      const updateQtyInput = document.getElementById(`updateQty-${itemId}`);
+      quantityInput.value = currentQuantity + 1;
+      //console.log(initialQuantities[itemId]);
+      //console.log(quantityInput.value);
+
+      const updateButton = document.getElementById(`update-${itemId}`);
+      const itemPrice = document.getElementById(`price-${itemId}`);
+
+      itemPrice.textContent = initialItemsPrices[itemId] * quantityInput.value;
+      totalPrice.textContent = (parseInt(totalPrice.textContent.replace(/,/g, '')) + initialItemsPrices[itemId]).toLocaleString("en-IN");
+
+      updateQtyInput.value = quantityInput.value;
+      console.log(updateQtyInput.value);
+
+      if (initialQuantities[itemId] != quantityInput.value) {
+        updateButton.disabled = false;
+      } else {
+        updateButton.disabled = true;
+      }
+    });
+  });
+
+  quantityInputs.forEach(input => {
+    input.addEventListener('change', (event) => {
+      const itemId = event.target.id.split('-')[1];
+      const quantityInput = document.getElementById(`quantity-${itemId}`);
+      const updateButton = document.getElementById(`update-${itemId}`);
+      const itemPrice = document.getElementById(`price-${itemId}`);
+      const currentQuantity = parseInt(quantityInput.value);
+
+      const updateQtyInput = document.getElementById(`updateQty-${itemId}`);
+
+      itemPrice.textContent = initialItemsPrices[itemId] * quantityInput.value;
+      //totalPrice.textContent = parseInt(totalPrice.textContent) + initialItemsPrices[itemId];
+
+      updateQtyInput.value = quantityInput.value;
+      console.log(updateQtyInput.value);
+
+      if (initialQuantities[itemId] != quantityInput.value) {
+        updateButton.disabled = false;
+      } else {
+        updateButton.disabled = true;
+      }
+    });
+  });
+</script>
+
+
+
+

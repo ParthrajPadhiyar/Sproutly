@@ -1,0 +1,93 @@
+
+
+ <% layout("/layouts/boilerplate.ejs") %>
+
+
+ <style>
+  @media (max-width: 768px) {
+    .cart-card {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+    }
+    .cart-card-img-top {
+      height: auto !important;
+    }
+  }
+  </style>
+
+ <div>
+  <h2 class="my-3 text-center">Your Wishlist</h2>
+  <% if(wishlist.length===0){ %>
+    <h3 class="text-center">Your Wishlist is empty.</h3>
+    <div class="text-center">
+      <a href="/items" class="btn btn-success">Add Seed to Wishlist</a>
+    </div>
+  <% } else { %>
+    <% wishlist.forEach(wishlistItem => { %>
+      <div class="card cart-card mb-3 mx-auto" style="max-width: 540px;">
+          <div class="row g-0">
+            <a href="/items/<%= wishlistItem.item._id %>" class="cart-img-link">
+              <div class="col-4 col-md-4 d-flex align-items-center">
+                <img src="<%= wishlistItem.item.image.url %>" class="img-fluid cart-card-img-top rounded-start h-100" alt="<%= wishlistItem.item.title %>" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Know more">
+              </div>
+            </a>
+            <div class="col-8 col-md-8">
+              <div class="card-body cart-card-body">
+                <a href="/items/<%= wishlistItem.item._id %>" class="cart-link">
+                  <h5 class="card-title" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Know more"><%= wishlistItem.item.title %></h5>
+                  <p class="card-text text-wrap" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="<%= wishlistItem.item.description %>"><%= wishlistItem.item.description.substring(0,50) + '...' %></p>
+                </a>
+                <p class="card-text mt-1 mb-1"><small class="text-body-secondary"><i class="fa fa-inr item-price" id="price-<%= wishlistItem.item.id %>"><%= wishlistItem.item.price.toLocaleString("en-IN") %></i></small></p>
+                <div class="row d-flex align-items-center justify-content-center ms-4 my-2">
+                  <div class="col-6 col-md-4">
+                    <form action="/wishlist/<%= wishlistItem.item._id %>?_method=DELETE" method="post">
+                      <button class="btn btn-dark">Remove</button>
+                    </form>
+                  </div>
+                  <div class="col-6 col-md-5">
+                    <form action="/cart" method="post">
+                      <input type="hidden" name="id" value="<%= wishlistItem.item._id %>">
+                      <button class="btn btn-success w-100">Add to Cart</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    <% }); %>
+    <div class="text-center">
+      <form action="/wishlist?_method=DELETE" method="post" id="removeAllForm">
+        <button class="btn btn-primary mb-3">Remove All</button>
+      </form>
+    </div>
+  <% } %>
+</div>
+
+
+
+
+
+
+
+
+
+
+ 
+ <script>
+   const removeAllForm = document.getElementById('removeAllForm');
+     removeAllForm.addEventListener('submit', (event) => {
+       const confirmed = confirm('Are you sure you want to remove all items from your Wishlist?');
+       if (!confirmed) {
+         event.preventDefault(); // Prevent form submission if not confirmed
+       }
+     });
+ 
+     
+ 
+ 
+ 
+ 
+ </script>
+ 
+ 

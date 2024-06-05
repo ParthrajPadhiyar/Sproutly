@@ -1,0 +1,78 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+
+
+<h2 class="text-center my-4">Checkout Page</h2>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="addresses-card col-md-6 border rounded-end shadow p-4 mb-5 cursor-pointer overflow-auto" style="height: 17rem;">
+        <h4>Address Card</h4>
+        <% for( let address of user.address ) { %>
+          <div class="address mt-3">
+              <p><%= address.firstName %></p>
+              <p><%= address.streetAddress%>, <%=address.city%>, <%=address.state%></p>
+              <div>
+                  <p>Phone Number</p>
+                  <p><%= address.mobile %></p>
+              </div>
+              <form action="/cart/checkout/orders" method="post">
+                <input type="hidden" value="<%= address._id %>" name="addressId">
+                <button class="btn btn-primary">Deliver Here</button>
+              </form>
+          </div>
+          <hr>
+        <% } %>
+      </div>
+      <div class="col-md-6">
+        <div class="card rounded-start shadow p-4">
+          <form action="/cart/checkout" id="addressForm" method="post" novalidate class="needs-validation">
+            <div class="row mb-3">
+              <div class="col-sm-6">
+                <label for="firstName" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="firstName" name="address[firstName]" required>
+                <div class="invalid-feedback">Please enter the First Name</div>
+              </div>
+              <div class="col-sm-6">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="lastName" name="address[lastName]" required>
+                <div class="invalid-feedback">Please enter the Last Name</div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="address" class="form-label">Street Address</label>
+              <textarea class="form-control" id="address" name="address[streetAddress]" rows="4" required></textarea>
+              <div class="invalid-feedback">Please enter the Street Address</div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-6">
+                <label for="city" class="form-label">City</label>
+                <input type="text" class="form-control" id="city" name="address[city]" required>
+                <div class="invalid-feedback">Please enter the city name</div>
+              </div>
+              <div class="col-sm-6">
+                <label for="state" class="form-label">State/Province/Region</label>
+                <input type="text" class="form-control" id="state" name="address[state]" required>
+                <div class="invalid-feedback">Please enter the State</div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-sm-6">
+                <label for="zip" class="form-label">Zip/Postal code</label>
+                <input type="number" class="form-control" id="zip" name="address[zipCode]" required>
+                <div class="invalid-feedback">Please enter the Zip Code</div>
+              </div>
+              <div class="col-sm-6">
+                <label for="phoneNumber" class="form-label">Phone Number</label>
+                <input type="text" class="form-control" id="phoneNumber" name="address[mobile]" required minlength="10">
+                <div class="invalid-feedback">Please enter the valid Phone Number</div>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Add New Address</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+

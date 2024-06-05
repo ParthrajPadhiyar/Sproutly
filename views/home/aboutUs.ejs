@@ -1,0 +1,147 @@
+<% layout("layouts/boilerplate.ejs") %>
+
+
+
+
+<style>
+  body {
+    font-family: sans-serif;
+  }
+
+  .hero {
+    background-color: #f5f5f5;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .story img {
+    max-width: 100%;
+    border-radius: 10px;
+  }
+
+  .values i {
+    font-size: 2rem;
+  }
+
+ 
+  .cta .cta-content {
+    position: relative; /* Ensure content is above the background image */
+    z-index: 1; /* Ensure content is above the background image */
+  }
+
+  .cta h2 {
+    color: #fff;
+  }
+
+  .cta a {
+    color: #fff;
+  }
+
+  .cta {
+  position: relative; /* Establish a stacking context for layering */
+}
+
+.cta-bg {
+  content: "";
+  position: absolute; /* Position it on top of the content */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* Ensure it covers the entire section */
+  background-image: url("images/shopnow1.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.7; /* Set the opacity for the background image only */
+}
+
+.cta h2, .cta a {
+  /* Adjust text and button positioning */
+  position: absolute; /* Position elements relative to the section */
+  top: 50%;             /* Center vertically */
+  transform: translateY(-50%); /* Offset to compensate for absolute positioning */
+  z-index: 1;             /* Ensure content is above the background image */
+}
+
+  @media (max-width: 767.98px) {
+    .hero img {
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .cta h2 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<section class="hero d-flex flex-column flex-md-row justify-content-center align-items-center p-3">
+  <div class="text-center">
+    <h1>Sproutly - Delivering Freshness to Your Door</h1>
+    <a href="/items" class="btn btn-success">Shop Now</a>
+  </div>
+  <img src="/images/heroabout.jpg" class="img-fluid w-50 rounded mt-3 mt-md-0 ms-md-3" alt="Fresh produce banner">
+</section>
+
+<section class="story container py-5 text-center">
+  <h2>Our Story</h2>
+  <h5 class="mt-3">Sproutly was founded in 2023 with a passion for healthy living and a desire to make fresh, organic produce accessible to everyone. We believe that everyone deserves to enjoy the taste and benefits of high-quality fruits and vegetables.</h5>
+  <img src="/images/aboutfarm.png" alt="Farm image" class="img-fluid rounded mt-3">
+</section>
+
+<section class="values container py-5">
+  <h2>Our Values</h2>
+  <ul class="row row-cols-1 row-cols-md-2 g-4 mt-3">
+    <li class="col d-flex align-items-center">
+      <i class="fas fa-leaf fa-3x text-primary me-3"></i>
+      <p>Freshness - We deliver farm-fresh produce directly to your doorstep.</p>
+    </li>
+    <li class="col d-flex align-items-center">
+      <i class="fas fa-earth fa-3x text-primary me-3"></i>
+      <p>Sustainability - We prioritize eco-friendly practices and support local farmers.</p>
+    </li>
+    <li class="col d-flex align-items-center">
+      <i class="fas fa-star fa-3x text-primary me-3"></i>
+      <p>Quality - We source the highest quality produce that meets our strict standards.</p>
+    </li>
+    <li class="col d-flex align-items-center">
+      <i class="fas fa-truck fa-3x text-primary me-3"></i>
+      <p>Convenience - Get your groceries delivered conveniently, saving you time and effort.</p>
+    </li>
+  </ul>
+</section>
+
+<section class="testimonials container py-5">
+  <h2>What People Say</h2>
+  <ul class="row row-cols-1 row-cols-md-2 g-4 mt-3">
+    <li class="col d-flex flex-column align-items-center text-center">
+      <i class="fas fa-user fa-2x mb-2"></i>
+      <p>"Sproutly has made it so easy to eat healthy! The produce is always fresh and delicious, and delivery is a lifesaver." - Jane D., Customer</p>
+    </li>
+    <li class="col d-flex flex-column align-items-center text-center">
+      <i class="fas fa-user fa-2x mb-2"></i>
+      <p>"I love supporting local farmers and Sproutly makes it convenient. Plus, their commitment to sustainability is impressive." - David M., Customer</p>
+    </li>
+    <li class="col d-flex flex-column align-items-center text-center">
+      <i class="fas fa-user fa-2x mb-2"></i>
+      <p>"With Sproutly, I can try new and exciting fruits and vegetables I wouldn't find at the regular grocery store. Their recipe suggestions are also great!" - Emily C., Customer</p>
+    </li>
+    <li class="col d-flex flex-column align-items-center text-center">
+      <i class="fas fa-user fa-2x mb-2"></i>
+      <p>"The quality of Sproutly's produce is unmatched. You can really taste the freshness, and it lasts longer than anything I've bought elsewhere." - John H., Customer</p>
+    </li>
+  </ul>
+</section>
+
+<section class="cta container py-5 text-center " style="height: 25rem;">
+  <span class="cta-bg"></span>
+  <div class="d-flex align-items-center flex-column">
+    <h2 class="text-black mb-3">Start Your Sproutly Journey Today!</h2>
+    <a href="/items" class="btn btn-success mt-5 ">Shop Now</a>
+  </div>
+</section>
+
+

@@ -1,0 +1,54 @@
+
+    <% layout("/layouts/boilerplate.ejs") %>
+
+
+    <style>
+        
+
+        @media (max-width: 575.98px) {
+            .col-md-4 {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-12 col-md-8 offset-md-2">
+                <h3>Edit This Item</h3>
+                <form method="post" action="/items/<%= item._id %>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" name="item[title]" placeholder="enter title" value="<%= item.title %>" class="form-control border border-dark" required>
+                        <div class="invalid-feedback">Title should not be empty</div>
+                    </div>
+            
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea name="item[description]" placeholder="enter about it" id="description" cols="30" rows="4" class="form-control border border-dark" required><%= item.description %></textarea>
+                        <div class="invalid-feedback">Description should not be empty</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        Original Item Image <br>
+                        <img src="<%= originalImageUrl %>" alt="item image" class="img-fluid">
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Upload New Image</label>
+                        <input type="file" name="item[image]" placeholder="enter image url/Link" class="form-control border border-dark">
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 col-md-4">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="number" name="item[price]" placeholder="enter price" value="<%= item.price %>" class="form-control border border-dark" required>
+                            <div class="invalid-feedback">Price should be valid</div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-dark edit-btn">Edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+

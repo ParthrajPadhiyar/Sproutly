@@ -1,0 +1,243 @@
+body{
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container{
+    flex: 1;
+}
+
+/* Navbar */
+
+.navbar{
+    height: 5rem;
+    background-color: white;
+}
+
+
+.nav-link{
+    color: #161616 !important; /* aa aapde atle */
+}
+
+.nav-link-text:hover{
+    scale: 1.1;
+    text-decoration: underline;
+    
+}
+
+.fa-circle-user:hover{
+    scale: 1.1;
+}
+
+.btn-search{
+    border-radius: 25px !important;
+    padding: 0 1rem !important;
+  }
+  .btn-search:hover{
+    background-color: forestgreen !important;
+    color: #fff !important;
+  }
+  .btn-search i{
+    display: inline !important;
+    margin-right: 0.5rem  !important;
+  }
+  .search-inp{
+    border-radius: 25px !important;
+    padding: 0.5rem 3rem !important;
+  }
+
+/* Footer */
+.f-info-links a{
+    text-decoration: none;
+    color: #161616;
+    font-size: 1.15rem;
+}
+
+.f-info-links a:hover{
+    text-decoration: underline;
+}
+
+/* .f-info-links, .f-info-socials, .f-info-brand{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} */
+
+
+.f-info-socials i{
+    
+    font-size: 1.25rem;
+}
+
+.f-info{
+    text-align: center;
+    height: 8rem;
+    background-color: rgb(177, 177, 177);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: space-evenly;
+}
+
+.f-logo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.f-logo img{
+    width: 10rem;
+}
+
+.listing-card{
+    border: none !important;
+    margin-bottom: 2rem;
+    transition: all 0.25s linear;
+}
+
+.listing-card:hover{
+    scale: 1.05;
+    /* transition: all 0.25s ease-in-out; */
+}
+
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
+.card-body{
+    padding: 0 !important;
+}
+
+.card-text p{
+    font-weight: 400 !important;
+}
+
+.listing-link{
+    text-decoration: none;
+}
+
+/* Card Effect */
+
+.card-img-overlay{
+    opacity: 0;
+}
+
+.card-img-overlay:hover {
+    opacity: 0.2;
+    background-color: white;
+}
+
+.add-btn, .edit-btn{
+    background-color: forestgreen !important;
+    border: none !important;
+}
+
+.listing-card .btn-success:hover{
+    background-color: darkgreen;
+}
+
+.fa-heart:hover{
+    color: crimson !important;
+    scale: 1.2;
+}
+
+/* SHow Page */
+
+/* .show-img{
+    height: 30vh;
+} */
+
+.btns{
+    display: flex;
+}
+
+.show-card{
+    padding-left: 0;
+    padding-right: 0;
+    border: none !important;
+}
+
+
+/* Map */
+
+#map {
+    height: 300px;
+}
+
+
+/* Cart */
+
+.cart-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    
+  }
+  
+  .cart-card-img-top {
+    height: 100px;
+    object-fit: cover; /* Ensures image fills the container */
+  }
+  
+  .cart-card-body {
+    text-align: center;
+    padding: 15px;
+  }
+
+  .cart-link{
+    text-decoration: none;
+    color: black;
+  }
+
+  .cart-img-link{
+    display: contents;
+    cursor: pointer;
+  }
+
+  
+  .carousel-btn{
+    opacity: 0.7;
+  }
+
+  .carousel-btn:hover{
+    opacity: 1;
+  }
+
+  .submit-btn{
+    background-color: forestgreen;
+  }
+
+/* .filter-container li {
+    list-style: none;
+} */
+
+
+/* carousel responsive */
+
+.carousel-btn {
+    font-size: 1rem !important; /* Default font size for smaller screens */
+  }
+  
+  @media (min-width: 576px) {
+    .carousel-btn {
+      font-size: 1.25rem !important; /* Larger font size for larger screens */
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .carousel-btn {
+      font-size: 1.5rem !important; /* Even larger font size for medium screens */
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .carousel-btn {
+      font-size: 1.65rem !important; /* Largest font size for large screens */
+    }
+  }
+  

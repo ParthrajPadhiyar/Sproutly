@@ -1,0 +1,269 @@
+<% layout("layouts/boilerplate.ejs") %>
+
+<style>
+    .product-details {
+        display: flex;
+        flex-wrap: wrap;
+        margin-bottom: 50px;
+    }
+
+    .product-image {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .product-image img {
+        width: 100%;
+        border-radius: 5px;
+        transition: transform 0.3s ease;
+    }
+
+    .product-image img:hover {
+        transform: scale(1.05);
+    }
+
+    .product-info {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .product-title {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .product-price {
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .product-rating {
+        color: #f0ad4e;
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .product-description {
+        margin-bottom: 1rem;
+    }
+
+    .product-features {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+
+    .product-features li {
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+    }
+
+    .product-features li i {
+        font-size: 1.2rem;
+        margin-right: 10px;
+        color: #00b894;
+    }
+
+    .add-to-cart {
+        padding: 10px 20px;
+        background-color: #00b894;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .add-to-cart:hover {
+        background-color: #008873;
+    }
+
+    .customer-reviews {
+        margin-bottom: 50px;
+    }
+
+    .customer-reviews h2 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+    }
+
+    .review-card {
+        border: 1px solid black;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
+
+    .review-card .reviewer-name {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .review-card .rating {
+        color: #f0ad4e;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .review-card .review-text {
+        line-height: 1.5;
+    }
+
+    @media (min-width: 768px) {
+        .product-image {
+            width: 40%;
+        }
+
+        .product-info {
+            width: 60%;
+        }
+    }
+</style>
+
+
+<section class="product-details container">
+    <div class="row">
+        <div class="col-md-6 product-image">
+            <img src="<%= item.image.url %>" alt="Product Image">
+        </div>
+        <div class="col-md-6 product-info">
+            <h2 class="product-title">
+                <%= item.title %> (Gujarati Name: <%= item.gujname %>)
+            </h2>
+            <p class="product-price"><i class="fa fa-inr"></i>
+                <%= item.price.toLocaleString("en-IN") %>
+            </p>
+            <div class="product-rating">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i> (4.5 out of 5 stars)
+            </div>
+            <p class="product-description">
+                <%= item.description %>
+            </p>
+            <ul class="product-features">
+                <li><i class="fas fa-check-circle"></i> Non-GMO seeds</li>
+                <li><i class="fas fa-check-circle"></i> Open-pollinated</li>
+                <li><i class="fas fa-check-circle"></i> Easy to grow</li>
+                <li><i class="fas fa-check-circle"></i> High yields</li>
+            </ul>
+            <div class="row">
+                <div class="w-auto">
+                    <form action="/cart" method="post">
+                        <input type="hidden" name="id" value="<%= item._id %>">
+                        <button class="btn btn-success add-to-cart">Add to Cart</button>
+                    </form>
+                </div>
+                <div class="w-auto">
+                    <form action="/wishlist" method="post">
+                        <input type="hidden" name="id" value="<%= item._id %>">
+                        <button class="btn btn-success add-to-cart">Wishlist</button>
+                    </form>
+                </div>
+                <% if(currUser && currUser._id.equals(item.owner._id)) { %>
+                    <div class="btns mt-3">
+                        <a href="/items/<%= item._id%>/edit" class="btn btn-dark col-1 edit-btn w-auto add-to-cart">Edit</a>
+                        <form method="post" action="/items/<%= item._id %>?_method=DELETE">
+                            <button class="btn btn-dark ms-2 add-to-cart">Delete</button>
+                        </form>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="row mt-3">
+    <div class="col-12 mt-3 mb-3">
+        <% if(currUser) {%>
+            <h4>Leave a Review</h4>
+            <form action="/items/<%= item._id %>/reviews" method="post" novalidate class="needs-validation">
+                <div class="mb-3 mt-3">
+                    <label for="rating" class="form-label">Rating</label>
+                    <fieldset class="starability-slot">
+                        <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                        <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                        <label for="first-rate1" title="Terrible">1 star</label>
+                        <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                        <label for="first-rate2" title="Not good">2 stars</label>
+                        <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                        <label for="first-rate3" title="Average">3 stars</label>
+                        <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                        <label for="first-rate4" title="Very good">4 stars</label>
+                        <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                        <label for="first-rate5" title="Amazing">5 stars</label>
+                    </fieldset>
+                </div>
+                <div class="mb-3 mt-3">
+                    <label for="comment" class="form-label">Comments</label>
+                    <textarea name="review[comment]" id="comment" cols="30" rows="4" class="form-control" required></textarea>
+                    <div class="invalid-feedback">Please give a comment</div>
+                </div>
+                <button class="btn btn-outline-dark">Submit</button>
+            </form>
+        <% } %>
+        <hr>
+    </div>
+</div>
+
+<% if(item.reviews.length > 0) { %>
+    <div class="row">
+        <h2>Customer Reviews</h2>
+        <% for(review of item.reviews) { %>
+            <div class="card col-md-5 col-12 ms-3 mb-3 border-0">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%= review.author.username %>
+                    </h5>
+                    <p class="starability-result card-text fs-6" data-rating="<%= review.rating %>"></p>
+                    <p class="card-text">
+                        <%= review.comment %>
+                    </p>
+                    <% if (currUser && currUser._id.equals(review.author._id)) { %>
+                        <form action="/items/<%= item._id %>/reviews/<%= review._id %>?_method=DELETE" class="mb-3" method="post">
+                            <button class="btn btn-sm btn-dark">Delete</button>
+                        </form>
+                    <% } %>
+                </div>
+            </div>
+        <% } %>
+    </div>
+<% } else { %>
+    <p>No reviews yet. Be the first to leave one!</p>
+<% } %>
+
+<section class="mt-3">
+    <h2>You Might Also Like</h2>
+    <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1 mt-3 items-container">
+        <% for(let item of filteredItems.slice(0,4)) { %>
+            <div class="card col listing-card">
+                <img src="<%= item.image.url %>" class="card-img-top" alt="item_image" style="height: 16rem;">
+                <div class="card-body text-center">
+                    <p class="card-text mb-0 mt-2">
+                        <b><%= item.title %></b>
+                    </p>
+                    <p><%= item.gujname %></p>
+                    <i class="fa fa-inr">
+                        <%= item.price.toLocaleString("en-IN") %>
+                    </i>
+                </div>
+                <div class="d-flex">
+                    <div class="flex-grow-1">
+                        <a href="/items/<%= item._id %>" class="btn btn-success mt-2 w-100 unstyle-list">View Detail</a>
+                    </div>
+                    <div>
+                        <form action="/wishlist" method="post">
+                            <input type="hidden" name="id" value="<%= item._id %>">
+                            <button class="btn mt-2"><i class="fa-solid fa-heart text-success"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+</section>

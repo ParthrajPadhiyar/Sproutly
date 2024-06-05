@@ -1,0 +1,60 @@
+<% layout("/layouts/boilerplate.ejs") %> 
+
+<style>
+    #togglePassword{
+    top: 0.65rem;
+    right: 2.2rem;
+
+    }
+</style>
+
+<div class="row mt-3">
+    <h1 class="col-6 offset-3">Login on Sproutly</h1>
+    <div class="col-6 offset-3">
+        <% if (locals.error) { %>  
+        <div class="alert alert-danger" role="alert">
+            <%= locals.error %>
+          </div>
+        <% } %>
+        <form action="/login" method="post" class="needs-validation" novalidate>
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" name="username" placeholder="Enter username"
+                    class="form-control" required id="username">
+                <div class="invalid-feedback">Please Enter a Username</div>
+            </div>
+            
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                    <div class="password position-relative">
+                        <input type="password" name="password" placeholder="Enter Password"
+                        class="form-control" required id="password">
+                        <div class="">
+                            <i id="togglePassword" class="fas fa-eye-slash position-absolute"></i>
+                        </div>
+                    </div> 
+                
+                <div class="invalid-feedback">Please Enter a Password</div>
+            </div>
+            
+            
+            <a href="/forgot-password" class="d-block mb-3 text-decoration-none">Forgot Password?</a>
+            <button class="btn btn-success">Login</button>
+        </form>
+    </div>
+</div>
+
+<script>
+   
+
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordField = document.getElementById('password');
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        
+    
+        this.classList.toggle('fa-eye-slash');
+        this.classList.toggle('fa-eye');
+    });
+    
+    </script>

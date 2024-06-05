@@ -1,0 +1,161 @@
+<% layout("/layouts/boilerplate.ejs") %>
+
+
+  <div id="carouselExampleRide" class="carousel slide mb-5 mt-3" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleRide" data-bs-slide-to="0" class="active"
+        aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleRide" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleRide" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active text-center">
+        <img src="/images/carousel_img1.jpeg" class="w-100 rounded" alt="...">
+        <div class="carousel-caption d-block">
+          <a href="/items" class="btn btn-success btn-lg carousel-btn">Shop Now</a>
+        </div>
+      </div>
+      <div class="carousel-item text-center">
+        <img src="/images/carousel_img2.jpeg" class="w-100 rounded" alt="...">
+        <div class="carousel-caption d-block">
+          <a href="/items" class="btn btn-success btn-lg carousel-btn">Shop Now</a>
+        </div>
+      </div>
+      <div class="carousel-item text-center">
+        <img src="https://qph.cf2.quoracdn.net/main-qimg-61b79ae95d252c67543c3666a50f8ee2" class="w-100 rounded"
+          alt="...">
+        <div class="carousel-caption d-block">
+          <a href="/items" class="btn btn-success btn-lg carousel-btn">Shop Now</a>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+
+  <% for (const category of allCategories) { %>
+    <div class="mt-4">
+      <div class="d-flex align-items-center justify-content-between">
+        <h2>
+          <%= category %> Seeds
+        </h2>
+        <a href="/items?category%5B%5D=<%= category %>&sort=">more</a>
+      </div>
+
+      <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+        <% for (const item of allItems.filter(item=> item.category.includes(category)).slice(0,3)) { %>
+          <a href="/items/<%= item._id %>" class="listing-link">
+            <div class="card col listing-card">
+              <img src="<%= item.image.url %>" class="card-img-top" alt="item_image" style="height: 20rem;">
+              <div class="card-body text-center">
+                <p class="card-text mb-0 mt-2">
+                  <b>
+                    <%= item.title %>
+                </p></b>
+                <p>
+                  <%= item.gujname %>
+                </p>
+                <i class="fa fa-inr">
+                  <%= item.price.toLocaleString("en-IN") %>
+                </i>
+              </div>
+              <div class="d-flex">
+                <div class="flex-grow-1">
+                  <form action="/cart" method="post">
+                    <input type="hidden" name="id" value="<%= item._id %>">
+                    <button class="btn btn-success mt-2 w-100">Add to Cart</button>
+                  </form>
+                </div>
+                <div>
+                  <form action="/wishlist" method="post">
+                    <input type="hidden" name="id" value="<%= item._id %>">
+                    <button class="btn mt-2"><i class="fa-solid fa-heart text-success"></i></button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </a>
+          <% } %>
+      </div>
+    </div>
+    <% } %>
+
+
+      <section class="customer-reviews py-5 bg-light">
+        <div class="container">
+          <h3 class="mb-5">Happy Sproutly Customers</h3>
+          <% if (allReviews.length > 0) { %>
+            <% for( let review of allReviews ) { %>
+              <div class="row row-cols-1 g-4">
+                <div class="col mb-3">
+                  <div class="card h-100 border-0">
+                    <div class="card-body d-flex flex-column justify-content-between">
+                      <div class="d-flex align-items-center text-muted mb-2">
+                        <i class="fas fa-user me-2"></i>
+                        <span>
+                          <%= review.author.username %>
+                        </span>
+                      </div>
+                      <p class="starability-result card-text fs-6" data-rating="<%= review.rating %>">
+                      </p>
+                      <p class="card-text mb-3">"<%= review.comment %>."
+                      </p>
+                      <% if (currUser && currUser._id.equals(review.author._id)) { %>
+                        <form action="/review/<%= review._id %>?_method=DELETE" class="mb-3" method="post">
+                          <button class="btn btn-sm btn-dark">Delete</button>
+                        </form>
+                        <% } %>
+                    </div>
+                  </div>
+                </div>
+  
+              </div>
+              <% } %>
+          <% } else { %>
+            <h5>No reviews yet. Be the first to leave one!</h5>
+            <% }  %>
+        </div>
+      </section>
+
+      <div class="text-center mt-4">
+        <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#reviewModal">Give Review</a>
+      </div>
+      <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="reviewModalLabel">Leave Your Review</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form id="reviewForm" method="post" action="/review" novalidate class="needs-validation">
+                <div class="mb-3">
+                  <label for="rating" class="form-label">Rating</label>
+                  <select class="form-select" id="rating" aria-label="Rating" name="review[rating]" required>
+                    <option value="5">5 Stars</option>
+                    <option value="4">4 Stars</option>
+                    <option value="3">3 Stars</option>
+                    <option value="2">2 Stars</option>
+                    <option value="1">1 Star</option>
+                  </select>
+                  <div class="invalid-feedback">Please select rating star</div>
+                </div>
+                <div class="mb-3">
+                  <label for="reviewText" class="form-label">Your Review</label>
+                  <textarea class="form-control" id="reviewText" rows="3" name="review[comment]" required></textarea>
+                  <div class="invalid-feedback">Please Enter your Review</div>
+                </div>
+
+                <button type="submit" class="btn btn-success">Submit Review</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>

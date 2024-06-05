@@ -1,0 +1,47 @@
+
+<nav aria-label="breadcrumb" >
+    <ol class="breadcrumb mt-3">
+      <li class="breadcrumb-item">
+        <a href="/">Home</a>
+      </li>
+      </ol>
+  </nav>
+
+  <script>
+    const breadcrumbContainer = document.querySelector('.breadcrumb');
+
+function updateBreadcrumbs(path) {
+// Clear existing breadcrumbs
+breadcrumbContainer.innerHTML = '';
+
+// Add "Home" link
+const homeLink = document.createElement('li');
+homeLink.classList.add('breadcrumb-item');
+homeLink.innerHTML = '<a href="/">Home</a>';
+breadcrumbContainer.appendChild(homeLink);
+
+// Split path by "/" to get page levels
+const pathSegments = path.split('/');
+
+// Iterate through path segments and create breadcrumb items
+for (let i = 1; i < pathSegments.length; i++) {
+const segment = pathSegments[i];
+const breadcrumbItem = document.createElement('li');
+breadcrumbItem.classList.add('breadcrumb-item');
+
+if (i === pathSegments.length - 1) {
+  // Last item - make it text without a link
+  breadcrumbItem.textContent = segment;
+} else {
+  // Category page - create link to category page URL
+  const categoryUrl = `/${pathSegments.slice(1, i + 1).join('/')}`;
+  breadcrumbItem.innerHTML = `<a href="${categoryUrl}">${segment}</a>`;
+}
+
+breadcrumbContainer.appendChild(breadcrumbItem);
+}
+}
+
+// Update breadcrumbs on page load based on current URL
+updateBreadcrumbs(window.location.pathname);
+</script>
