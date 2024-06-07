@@ -73,7 +73,6 @@ input.is-invalid + .invalid-feedback {
 
 <script>
    
-// script.js
 
 document.getElementById('togglePassword').addEventListener('click', function () {
     const passwordField = document.getElementById('password');
@@ -87,7 +86,7 @@ document.getElementById('togglePassword').addEventListener('click', function () 
 document.getElementById('password').addEventListener('input', validatePassword);
 document.querySelector('form').addEventListener('submit', function(event) {
     if (!validatePassword()) {
-        event.preventDefault(); // Prevent form submission if password is invalid
+        event.preventDefault(); 
     }
 });
 

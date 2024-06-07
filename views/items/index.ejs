@@ -2,47 +2,44 @@
 
 
 
-<style>
+  <style>
+    .filter-small {
+      height: auto;
+      width: 70vw;
+      position: absolute;
+      z-index: 5;
+      background-color: white;
+    }
 
+    .filter-container-small {
 
-.filter-small{
-  height: auto;
-  width: 70vw;
-  position: absolute;
-  z-index: 5;
-  background-color: white;
-}
+      display: none;
+    }
 
-.filter-container-small{
-  
-  display: none;
-}
+    .sort-section {
+      justify-content: end !important;
+    }
 
-.sort-section{
-  justify-content: end !important;
-}
+    @media (max-width: 768px) {
 
-@media (max-width: 768px) {
-  /* Hide filters on small screens */
-  .filter-container {
-    display: none;
-  }
+      .filter-container {
+        display: none;
+      }
 
-  /* Increase font size for product titles on small screens */
-  .card-text b {
-    font-size: 18px;
-  }
-  .filter-container-small{
-    display: block !important;
-}
+      .card-text b {
+        font-size: 18px;
+      }
 
-  .sort-section{
-    justify-content: space-between !important;
-  }
-  
-}
+      .filter-container-small {
+        display: block !important;
+      }
 
-</style>
+      .sort-section {
+        justify-content: space-between !important;
+      }
+
+    }
+  </style>
 
 
   <h2 class="mt-3 mb-4">Sproutly Seeds</h2>
@@ -51,9 +48,9 @@
     <div class="row">
       <div class="col-lg-3 col-md-4 col-sm-12">
 
-        
-          
-        
+
+
+
 
         <div class="filter-container">
           <form action="/items" method="get">
@@ -170,11 +167,11 @@
 
       <div class="col-lg-9 col-md-8 col-sm-12">
         <div class="sort-section d-flex justify-content-between align-items-center mb-3">
-          <div class="filter-container-small" >
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#smallFilter" >
+          <div class="filter-container-small">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#smallFilter">
               <span class="navbar-toggler-icon"><i class="fa fa-filter float-end pt-1"></i></span>
             </button>
-            
+
             <div class="filter-small collapse mt-2" id="smallFilter">
               <form action="/items" method="get">
                 <ul class="list-group">
@@ -182,7 +179,7 @@
                     <p class="mb-0 ps-3 d-flex justify-content-between align-items-center">
                       Filters
                       <i class="fa fa-filter float-end"></i>
-    
+
                     </p>
                     <ul class="list-group  filter-options">
                       <div class="accordion mt-2" id="accordionExample">
@@ -229,7 +226,8 @@
                                   <label for="category-nut">Nut Seeds</label>
                                 </li>
                                 <li>
-                                  <input type="checkbox" id="category-green-leafy" name="category[]" value="Green Leafy">
+                                  <input type="checkbox" id="category-green-leafy" name="category[]"
+                                    value="Green Leafy">
                                   <label for="category-green-leafy">Green Leafy Seeds</label>
                                 </li>
                               </ul>
@@ -270,10 +268,10 @@
                             </div>
                           </div>
                         </div>
-    
+
                       </div>
                     </ul>
-    
+
                   </li>
                 </ul>
                 <input type="hidden" name="sort" value="<%= sort %>">
@@ -334,7 +332,7 @@
     </div>
   </div>
 
-  
+
 
 
 
@@ -357,9 +355,9 @@
 
     const smallFilterBtn = document.querySelector(".filter-small-btn");
     const smallFilter = document.querySelector(".filter-small");
-    
+
     smallFilterBtn.addEventListener("click", () => {
-      if(smallFilter.style.display == "none"){
+      if (smallFilter.style.display == "none") {
         smallFilter.style.display = "block";
 
       } else {

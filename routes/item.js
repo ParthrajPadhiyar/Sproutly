@@ -21,8 +21,7 @@ router.route("/")
 
 router.get("/new",isLoggedIn, itemController.renderNewForm);
 
-/* router.route("/sort")
-.get(wrapAsync(itemController.sortItems)) */
+
 
 router.route("/:id")
 .get(wrapAsync(itemController.showItem))

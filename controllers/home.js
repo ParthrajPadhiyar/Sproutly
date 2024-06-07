@@ -5,31 +5,20 @@ const nodemailer = require("nodemailer");
 
 module.exports.home = async (req, res) => {
   try {
-    const allCategories = await Item.distinct("category"); // Get unique categories
+    const allCategories = await Item.distinct("category");
     const allItems = await Item.find({});
     const allReviews = await Review.find({}).populate("author");
 
     res.render("home/home.ejs", { allItems, allReviews, allCategories });
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error fetching data"); // Handle errors gracefully
+    res.status(500).send("Error fetching data");
   }
 };
 
 
-/* module.exports.home = async (req,res) => {
-    const allItems = await Item.find({});
-    const allReviews = await Review.find({}).populate("author");
-    res.render("home/home.ejs", {allItems, allReviews});
-};
- */
 module.exports.searchItem = async (req, res) => {
   const allItems = await Item.find({});
-  /* if(req.query.q === ""){
-      req.flash("error", "Please enter a search term.")
-      return res.redirect("/");
-  } */
-  //console.log(req.query.q);
   const query = req.query.q.toLowerCase();
   const filteredItems = allItems.filter(item =>
     item.title.toLowerCase().includes(query) ||
@@ -47,7 +36,6 @@ module.exports.giveHomeReview = async (req, res) => {
   let newReview = new Review(req.body.review);
   newReview.author = req.user._id;
   await newReview.save();
-  //console.log(newReview);
   req.flash("success", "New Review Created!");
   res.redirect("/");
 }
@@ -75,7 +63,7 @@ module.exports.renderContact = (req, res) => {
 
 module.exports.contactMessage = async (req, res) => {
   const { name, email, subject, message } = req.body;
-  
+
 
 
   if (!name || !email || !subject || !message) {
@@ -83,15 +71,15 @@ module.exports.contactMessage = async (req, res) => {
     return res.redirect(req.headers.referer);
   }
 
-  if(res.locals.currUser.email === email){ 
+  if (res.locals.currUser.email === email) {
     try {
       const user = await User.findOne({ email });
-  
+
       if (!user) {
         req.flash("error", "User not found")
         return res.redirect(req.headers.referer);
       }
-  
+
       const transporter = nodemailer.createTransport({
         service: "gmail",
         host: 'smtp.gmail.com',
@@ -102,18 +90,18 @@ module.exports.contactMessage = async (req, res) => {
           pass: process.env.EMAIL_PASS,
         }
       });
-  
+
       const mailOptions = {
         from: email,
         to: process.env.EMAIL_USER,
         subject: subject,
         text: `From: ${name} - ${email}\n\n${message}`
       };
-  
+
       transporter.sendMail(mailOptions);
       req.flash("success", "Message Sent");
       res.redirect(req.headers.referer);
-  
+
     } catch (error) {
       console.log(error);
       req.flash("error", "Failed to send Message");

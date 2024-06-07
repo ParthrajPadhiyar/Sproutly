@@ -18,7 +18,7 @@ body{
 
 
 .nav-link{
-    color: #161616 !important; /* aa aapde atle */
+    color: #161616 !important; 
 }
 
 .nav-link-text:hover{
@@ -59,12 +59,7 @@ body{
     text-decoration: underline;
 }
 
-/* .f-info-links, .f-info-socials, .f-info-brand{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-} */
+
 
 
 .f-info-socials i{
@@ -99,7 +94,6 @@ body{
 
 .listing-card:hover{
     scale: 1.05;
-    /* transition: all 0.25s ease-in-out; */
 }
 
 .card-img-top{
@@ -145,11 +139,7 @@ body{
     scale: 1.2;
 }
 
-/* SHow Page */
 
-/* .show-img{
-    height: 30vh;
-} */
 
 .btns{
     display: flex;
@@ -181,7 +171,7 @@ body{
   
   .cart-card-img-top {
     height: 100px;
-    object-fit: cover; /* Ensures image fills the container */
+    object-fit: cover; 
   }
   
   .cart-card-body {
@@ -212,32 +202,30 @@ body{
     background-color: forestgreen;
   }
 
-/* .filter-container li {
-    list-style: none;
-} */
+
 
 
 /* carousel responsive */
 
 .carousel-btn {
-    font-size: 1rem !important; /* Default font size for smaller screens */
+    font-size: 1rem !important; 
   }
   
   @media (min-width: 576px) {
     .carousel-btn {
-      font-size: 1.25rem !important; /* Larger font size for larger screens */
+      font-size: 1.25rem !important; 
     }
   }
   
   @media (min-width: 768px) {
     .carousel-btn {
-      font-size: 1.5rem !important; /* Even larger font size for medium screens */
+      font-size: 1.5rem !important; 
     }
   }
   
   @media (min-width: 992px) {
     .carousel-btn {
-      font-size: 1.65rem !important; /* Largest font size for large screens */
+      font-size: 1.65rem !important; 
     }
   }
   

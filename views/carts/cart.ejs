@@ -79,7 +79,7 @@
   removeAllForm.addEventListener('submit', (event) => {
     const confirmed = confirm('Are you sure you want to remove all items from your cart?');
     if (!confirmed) {
-      event.preventDefault(); // Prevent form submission if not confirmed
+      event.preventDefault(); 
     }
   });
 
@@ -99,16 +99,13 @@
   itemQuantityInputs.forEach(input => {
     const itemId = input.id.split('-')[1];
     initialQuantities[itemId] = parseInt(input.value);
-    //console.log(initialQuantities[itemId]);
   });
 
   const initialItemsPrices = {};
   const itemsPrices = document.querySelectorAll('.item-price');
   itemsPrices.forEach(para => {
     const itemId = para.id.split('-')[1];
-    //console.log("para"+para.textContent);
     initialItemsPrices[itemId] = parseInt(para.textContent.replace(/,/g, '')) / initialQuantities[itemId];
-    //console.log("price"+initialItemsPrices[itemId]);
   });
 
   decreaseButtons.forEach(button => {
@@ -120,8 +117,6 @@
       const currentQuantity = parseInt(quantityInput.value);
 
       const updateQtyInput = document.getElementById(`updateQty-${itemId}`);
-      //console.log(initialQuantities[itemId]);
-      //console.log(quantityInput.value);
 
       if (currentQuantity > 1) {
         quantityInput.value = currentQuantity - 1;
@@ -142,15 +137,11 @@
 
   increaseButtons.forEach(button => {
     button.addEventListener('click', (event) => {
-      //console.log(event.target.id);
       const itemId = event.target.id.split('-')[1];
-      //console.log(itemId);
       const quantityInput = document.getElementById(`quantity-${itemId}`);
       const currentQuantity = parseInt(quantityInput.value);
       const updateQtyInput = document.getElementById(`updateQty-${itemId}`);
       quantityInput.value = currentQuantity + 1;
-      //console.log(initialQuantities[itemId]);
-      //console.log(quantityInput.value);
 
       const updateButton = document.getElementById(`update-${itemId}`);
       const itemPrice = document.getElementById(`price-${itemId}`);
@@ -180,7 +171,6 @@
       const updateQtyInput = document.getElementById(`updateQty-${itemId}`);
 
       itemPrice.textContent = initialItemsPrices[itemId] * quantityInput.value;
-      //totalPrice.textContent = parseInt(totalPrice.textContent) + initialItemsPrices[itemId];
 
       updateQtyInput.value = quantityInput.value;
       console.log(updateQtyInput.value);
