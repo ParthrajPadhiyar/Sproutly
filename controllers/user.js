@@ -101,7 +101,7 @@ module.exports.sendMail = async (req, res) => {
       },
       to: email,
       subject: 'Sproutly Password Reset',
-      text: `You requested a password reset for your Sproutly account. Please click on the following link to reset your password: http://localhost:8080/reset-password/${resetToken}`
+      text: `You requested a password reset for your Sproutly account. Please click on the following link to reset your password: https://sproutly.onrender.com/reset-password/${resetToken}`
     };
 
 
